@@ -1,5 +1,6 @@
 package com.mashaffer.myiteminjarestimator
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -45,6 +46,7 @@ class MainActivity : AppCompatActivity() {
     private fun spherePackClickListener(){
         sphereBtn.setOnClickListener({
             // If clicked navigate to the jar info activity
+            startActivity(Intent(this,JarInfoActivity::class.java))
             Log.i(TAG, "User clicked the sphere button")
         })
 
@@ -57,6 +59,7 @@ class MainActivity : AppCompatActivity() {
     private fun volObjClickListener(){
         volObjBtn.setOnClickListener({
             // If clicked navigate to the volume of items calculator
+            startActivity(Intent(this,VolObjActivity::class.java))
             Log.i(TAG, "User clicked the vol obj button")
         })
 

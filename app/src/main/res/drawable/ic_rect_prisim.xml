@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="200dp"
+    android:height="300dp"
+    android:viewportWidth="200"
+    android:viewportHeight="300">
+
+    <!-- Top Face (Parallelogram) -->
+    <path
+        android:fillColor="#ADD8E6"
+        android:pathData="M 40,70 L 160,50 L 180,90 L 60,110 Z" />
+
+    <!-- Front Face (Rectangle) -->
+    <path
+        android:fillColor="#ADD8E6"
+        android:pathData="M 40,70 L 60,110 L 60,240 L 40,200 Z" />
+
+    <!-- Right Face (Rectangle) -->
+    <path
+        android:fillColor="#8FB9CA"
+        android:pathData="M 60,110 L 180,90 L 180,220 L 60,240 Z" />
+
+    <!-- Left Face (Hidden, not needed) -->
+
+    <!-- Back Face (Hidden, not needed) -->
+
+    <!-- Bottom Face (Hidden, not needed) -->
+
+    <!-- Optional: Edges for better definition -->
+    <path
+        android:strokeColor="#6A8B99"
+        android:strokeWidth="1"
+        android:pathData="M 40,70 L 160,50 L 180,90 L 60,110 Z" />
+
+    <path
+        android:strokeColor="#6A8B99"
+        android:strokeWidth="1"
+        android:pathData="M 40,70 L 40,200 L 60,240 L 60,110 Z" />
+
+    <path
+        android:strokeColor="#6A8B99"
+        android:strokeWidth="1"
+        android:pathData="M 60,110 L 180,90 L 180,220 L 60,240 Z" />
+
+    <path
+        android:strokeColor="#6A8B99"
+        android:strokeWidth="1"
+        android:pathData="M 40,200 L 60,240" />
+
+    <path
+        android:strokeColor="#6A8B99"
+        android:strokeWidth="1"
+        android:pathData="M 180,90 L 180,220" />
+
+</vector>

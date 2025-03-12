@@ -1,6 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#3DDC84">
+
+    <EditText
+        android:id="@+id/objWidthInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="116dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toTopOf="@+id/solutionTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toEndOf="@+id/objWidthLabel"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/objLengthInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="72dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/objLengthLabel"
+        app:layout_constraintTop_toBottomOf="@+id/objWidthInput" />
+
+    <TextView
+        android:id="@+id/objHeightLabel4"
+        android:layout_width="166dp"
+        android:layout_height="77dp"
+        android:layout_marginBottom="324dp"
+        android:text="Height of Items: "
+        android:textColor="#0E0E0E"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.138"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/objLengthInput"
+        app:layout_constraintVertical_bias="0.903" />
+
+    <TextView
+        android:id="@+id/objLengthLabel"
+        android:layout_width="166dp"
+        android:layout_height="77dp"
+        android:text="Length of Items: "
+        android:textColor="#202020"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toTopOf="@+id/objHeightLabel4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.122"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/objWidthInput" />
+
+    <TextView
+        android:id="@+id/objWidthLabel"
+        android:layout_width="166dp"
+        android:layout_height="77dp"
+        android:text="Width of Items: "
+        android:textColor="#171717"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toTopOf="@+id/objLengthLabel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.122"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.679" />
+
+    <TextView
+        android:id="@+id/solutionTextView"
+        android:layout_width="219dp"
+        android:layout_height="66dp"
+        android:layout_marginBottom="88dp"
+        android:text="Number of items in Jar: "
+        android:textColor="#0D0C0C"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/calcBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="Calculate"
+        app:layout_constraintBottom_toTopOf="@+id/solutionTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/objHeightLabel4"
+        app:layout_constraintVertical_bias="0.848" />
+
+    <EditText
+        android:id="@+id/objHeightInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toTopOf="@+id/calcBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/objLengthInput"
+        app:layout_constraintVertical_bias="0.493" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
