@@ -14,4 +14,12 @@ class ItemShapeActivity: AppCompatActivity() {
         setContentView(R.layout.item_shape_activity)
 
     }
+
+    /**
+     * List of shapes:
+     * Egg
+     * cylinder
+     * sphere
+     * rectangular prism
+     */
 }
