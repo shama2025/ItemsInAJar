@@ -1,6 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#3DDC84">
+
+    <!-- Header TextView -->
+    <TextView
+        android:id="@+id/jarActivityHeader"
+        android:layout_width="262dp"
+        android:layout_height="87dp"
+        android:text="What is approximate shape of the item?"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.557"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.083" />
+
+    <!-- FrameLayout for Sphere ImageButton and its Label -->
+    <FrameLayout
+        android:id="@+id/itemShapeSphereContainer"
+        android:layout_width="170dp"
+        android:layout_height="185dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.879"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.326">
+
+        <ImageButton
+            android:id="@+id/itemShapeSphere"
+            android:layout_width="170dp"
+            android:layout_height="185dp"
+            android:src="@drawable/ic_sphere"
+            android:contentDescription="Sphere" />
+
+        <TextView
+            android:id="@+id/itemShapeSphereLabel"
+            android:layout_width="91dp"
+            android:layout_height="43dp"
+            android:layout_gravity="center"
+            android:text="Sphere/Mints"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+    </FrameLayout>
+
+    <!-- FrameLayout for Egg ImageButton and its Label -->
+    <FrameLayout
+        android:id="@+id/itemShapeEggContainer"
+        android:layout_width="162dp"
+        android:layout_height="185dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/itemShapeSphereContainer"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.326">
+
+        <ImageButton
+            android:id="@+id/itemShapeEgg"
+            android:layout_width="162dp"
+            android:layout_height="185dp"
+            android:src="@drawable/ic_egg"
+            android:contentDescription="Egg" />
+
+        <TextView
+            android:id="@+id/itemShapeEggLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Egg/Jellybean"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <!-- FrameLayout for Cylinder ImageButton and its Label -->
+    <FrameLayout
+        android:id="@+id/itemShapeCylinderContainer"
+        android:layout_width="169dp"
+        android:layout_height="255dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.817">
+
+        <ImageButton
+            android:id="@+id/itemShapeCylinder"
+            android:layout_width="169dp"
+            android:layout_height="255dp"
+            android:contentDescription="Cylinder"
+            app:srcCompat="@drawable/ic_cylinder" />
+
+        <TextView
+            android:id="@+id/itemShapeCylinderLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cylinder/Jolly Rancher"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_gravity="center" />
+    </FrameLayout>
+
+    <!-- FrameLayout for RectPrism ImageButton and its Label -->
+    <FrameLayout
+        android:id="@+id/itemShapeRectPrismContainer"
+        android:layout_width="183dp"
+        android:layout_height="251dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.929"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/itemShapeSphereContainer"
+        app:layout_constraintVertical_bias="0.219">
+
+        <ImageButton
+            android:id="@+id/itemShapeRectPrism"
+            android:layout_width="183dp"
+            android:layout_height="251dp"
+            app:srcCompat="@drawable/ic_rect_prisim"
+            android:contentDescription="RectPrism" />
+
+        <TextView
+            android:id="@+id/itemShapeRectPrismLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rectangle/Hershy Bar"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:layout_gravity="center" />
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

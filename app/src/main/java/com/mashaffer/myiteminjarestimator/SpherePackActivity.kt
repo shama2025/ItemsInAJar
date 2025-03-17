@@ -14,4 +14,13 @@ class SpherePackActivity: AppCompatActivity() {
         setContentView(R.layout.sphere_packing_activity)
 
     }
+    /**
+     * For egg/jellybean shape use 3.5325
+     * For sphere shape get the diameter
+     * For cylinder shape get diameter and height
+     * For rect prism shape get the l,w,h
+     *
+     * For the 2 jar shapes get the l,w,h (rect prism jar) or the diameter or height (cylinder jar)
+     *
+     */
 }
