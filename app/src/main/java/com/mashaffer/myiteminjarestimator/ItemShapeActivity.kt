@@ -31,7 +31,7 @@ class ItemShapeActivity: AppCompatActivity() {
      * This function initializes the ItemShapeActivity
      */
     private fun initItemShapeActivity() {
-        val spherePackForm: Bundle = getIntentVal()
+        val spherePackForm: Bundle = getBundle()
 
         eggShapeBtnClickListener(spherePackForm)
 
@@ -45,7 +45,7 @@ class ItemShapeActivity: AppCompatActivity() {
     /**
      * This function gets the value from the intent
      */
-    private fun getIntentVal(): Bundle{
+    private fun getBundle(): Bundle{
         val needCylinder = intent.getBooleanExtra("cylinder",true)
         val needPrism = intent.getBooleanExtra("rectPrism", true)
 

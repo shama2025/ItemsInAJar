@@ -54,7 +54,7 @@ class VolObjActivity: AppCompatActivity() {
         items["length"] = length
 
         val volume = items["length"]?.let { items["height"]?.let { it1 ->
-            items["width"]?.times(it)!!?.times(
+            items["width"]?.times(it)!!.times(
                 it1
             )
         } }
