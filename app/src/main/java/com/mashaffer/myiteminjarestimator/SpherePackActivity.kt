@@ -136,51 +136,44 @@ class SpherePackActivity: AppCompatActivity() {
                 val height = jarHeightFloat ?: 0f
 
                 // Calculate volume of the jar
-                val volJar = Math.PI * radius * radius * height
+                val volJar = Math.PI * (radius * radius) * height
 
                 // get Volume of individual item
-                val itemVol = getItemVolume(spherePackBundle,itemWidthFloat,itemHeightFloat,itemLengthFloat,itemDiameterFloat)
-                solutionTextView.text = "Number of Items in Jar: ${((volJar.div(itemVol)).times(0.62))}"
+                val itemList = getItemVolume(spherePackBundle,itemWidthFloat,itemHeightFloat,itemLengthFloat,itemDiameterFloat)
+                Log.i(TAG, "Volume of the item $itemList")
+                solutionTextView.text = "${((volJar.times(itemList[1])).div(itemList[0]))}"
             }
             else if(spherePackBundle["rectPrismJar"] == true) {
                 // Solve using the rectangular prism equation
                 val volJar = jarWidthFloat?.times(jarHeightFloat!!)?.times(jarLengthFloat!!)
 
                 // Get volume of individual item
-                val itemVol = getItemVolume(
+                val itemList = getItemVolume(
                     spherePackBundle,
                     itemWidthFloat,
                     itemHeightFloat,
                     itemLengthFloat,
                     itemDiameterFloat
                 )
-
-                solutionTextView.text = "Number of Items in Jar: ${((volJar?.div(itemVol))?.times(0.62))}"
+                Log.i(TAG, "Volume of the item $itemList")
+                solutionTextView.text = "${((volJar?.times(itemList[1]))?.div(itemList[0]))}"
             }
 
         })
     }
 
-    private fun getItemVolume(spherePackBundle: MutableMap<String, Boolean>,itemWidthFloat:Float?,itemHeightFloat: Float?, itemLengthFloat: Float?,itemDiameterFloat: Float? ): Double {
+    private fun getItemVolume(spherePackBundle: MutableMap<String, Boolean>,itemWidthFloat:Float?,itemHeightFloat: Float?, itemLengthFloat: Float?,itemDiameterFloat: Float? ): MutableList<Double> {
         if(spherePackBundle["eggShape"] == true){
-            return 3.5325
+            return mutableListOf(.72,0.8)
         }else if(spherePackBundle["sphereShape"] == true){
-            return 4/3 * Math.PI * ((itemDiameterFloat?.div(2)!!) * (itemDiameterFloat.div(2)))
+            return mutableListOf(4/3 * Math.PI * ((itemDiameterFloat?.div(2)!!) * (itemDiameterFloat.div(2))),0.73)
         }else if(spherePackBundle["cylinderShape"] == true){
-            return Math.PI * itemHeightFloat!! * (itemDiameterFloat?.div(2)!!)
+            return mutableListOf(Math.PI * itemHeightFloat!! * (itemDiameterFloat?.div(2)!!), 0.72)
         }
         else if(spherePackBundle["rectPrismShape"] == true){
-            return (itemHeightFloat!! * itemLengthFloat!! * itemWidthFloat!!).toDouble()
+            return mutableListOf((itemHeightFloat!! * itemLengthFloat!! * itemWidthFloat!!).toDouble(),0.64)
         }
-        return 0.0
+        return mutableListOf(0.0)
     }
-    /**
-     * For egg/jellybean shape use 3.5325
-     * For sphere shape get the diameter
-     * For cylinder shape get diameter and height
-     * For rect prism shape get the l,w,h
-     *
-     * For the 2 jar shapes get the l,w,h (rect prism jar) or the diameter or height (cylinder jar)
-     *
-     */
+
 }
