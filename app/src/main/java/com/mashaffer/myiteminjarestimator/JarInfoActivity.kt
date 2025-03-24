@@ -2,62 +2,75 @@ package com.mashaffer.myiteminjarestimator
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
 /**
- * UI to gain more info regarding to general shape of jar
+ * Activity for selecting the jar shape before proceeding to item shape selection.
+ * Allows users to choose between rectangular prism and cylindrical jar shapes.
  */
-class JarInfoActivity: AppCompatActivity() {
+class JarInfoActivity : AppCompatActivity() {
 
-    // Ui Variables
-    private val rectPrismJarBtn:ImageView by lazy {findViewById(R.id.rectPrisimJarBtn)}
-    private val cylinderJarBtn:ImageView by lazy {findViewById(R.id.cylinderJarBtn)}
+    // UI components for jar shape selection
+    private val rectPrismJarBtn: ImageView by lazy { findViewById(R.id.rectPrisimJarBtn) }
+    private val cylinderJarBtn: ImageView by lazy { findViewById(R.id.cylinderJarBtn) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.jar_info_activity)
 
-        initJarInfoActivity()
+        setupJarShapeButtons()
     }
 
     /**
-     * This function initializes the components of the JarInfoActivity
+     * Sets up click listeners for jar shape selection buttons.
+     * Configures navigation to the ItemShapeActivity with appropriate jar shape flags.
      */
-    private fun initJarInfoActivity() {
-        rectPrismJarBtnClickListener()
-
-        cylinderJarBtnClickListener()
+    private fun setupJarShapeButtons() {
+        setupCylinderJarButton()
+        setupRectPrismJarButton()
     }
 
     /**
-     * This function handles the cylinderJarBtn click listener
+     * Configures the click listener for the cylindrical jar button.
+     * Navigates to ItemShapeActivity with cylindrical jar configuration.
      */
-    private fun cylinderJarBtnClickListener() {
-        cylinderJarBtn.setOnClickListener({
-            val jarBundle: Bundle = Bundle().apply{
-                putBoolean("cylinder", true)
-                putBoolean("rectPrism", false)
-            }
-            startActivity(Intent(this,ItemShapeActivity::class.java).putExtras(jarBundle).apply{action=Intent.ACTION_VIEW})
-
-        })
+    private fun setupCylinderJarButton() {
+        cylinderJarBtn.setOnClickListener {
+            navigateToItemShapeActivity(isCylinderJar = true)
+        }
     }
 
     /**
-     * This functions handles the rectPrism click listener
+     * Configures the click listener for the rectangular prism jar button.
+     * Navigates to ItemShapeActivity with rectangular prism jar configuration.
      */
-    private fun rectPrismJarBtnClickListener() {
-        rectPrismJarBtn.setOnClickListener({
-            val jarBundle: Bundle = Bundle().apply{
-                putBoolean("cylinder", false)
-                putBoolean("rectPrism", true)
-            }
-            startActivity(Intent(this,ItemShapeActivity::class.java).putExtras(jarBundle).apply{action=Intent.ACTION_VIEW})
-        })
-}
+    private fun setupRectPrismJarButton() {
+        rectPrismJarBtn.setOnClickListener {
+            navigateToItemShapeActivity(isCylinderJar = false)
+        }
+    }
 
+    /**
+     * Navigates to ItemShapeActivity with the specified jar shape configuration.
+     *
+     * @param isCylinderJar Boolean flag indicating the jar shape (true for cylinder, false for rectangular prism)
+     */
+    private fun navigateToItemShapeActivity(isCylinderJar: Boolean) {
+        // Create a bundle with jar shape configuration
+        val jarShapeBundle = Bundle().apply {
+            putBoolean("cylinderJar", isCylinderJar)
+            putBoolean("rectPrismJar", !isCylinderJar)
+        }
+
+        // Create and start the intent to ItemShapeActivity
+        val intent = Intent(this, ItemShapeActivity::class.java).apply {
+            putExtras(jarShapeBundle)
+            action = Intent.ACTION_VIEW
+        }
+
+        startActivity(intent)
+    }
 }

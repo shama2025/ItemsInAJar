@@ -7,28 +7,37 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import kotlin.time.times
-
 
 /**
- * UI used to help user estimate number of items in a jar
+ * Activity for estimating the number of items that can fit in a jar using various shape calculations.
+ * Supports different item and jar shapes including spheres, cylinders, rectangular prisms, and eggs.
  */
-class SpherePackActivity: AppCompatActivity() {
+class SpherePackActivity : AppCompatActivity() {
 
-    //UI Variables
-    private val calcBtn: Button by lazy {findViewById(R.id.calcBtn)}
-    private val solutionTextView: TextView by lazy {findViewById(R.id.solutionTextView)}
-    private val itemWidthInput: TextView by lazy {findViewById(R.id.objWidthInput)}
-    private val itemLengthInput: TextView by lazy{findViewById(R.id.objLengthInput)}
-    private val itemHeightInput: TextView by lazy {findViewById(R.id.objHeightInput)}
-    private val itemDiameterInput: TextView by lazy {findViewById(R.id.objDiameterInput)}
-    private val jarHeightInput: TextView by lazy {findViewById(R.id.jarHeightInput)}
-    private val jarLengthInput: TextView by lazy {findViewById(R.id.jarLengthInput)}
-    private val jarWidthInput: TextView by lazy {findViewById(R.id.jarWidthInput)}
-    private val jarDiameterInput: TextView by lazy {findViewById(R.id.jarDiameterInput)}
+    // UI component lazy initializations
+    private val calcBtn: Button by lazy { findViewById(R.id.calcBtn) }
+    private val solutionTextView: TextView by lazy { findViewById(R.id.solutionTextView) }
 
-    companion object{
+    // Item dimension inputs
+    private val itemWidthInput: TextView by lazy { findViewById(R.id.objWidthInput) }
+    private val itemLengthInput: TextView by lazy { findViewById(R.id.objLengthInput) }
+    private val itemHeightInput: TextView by lazy { findViewById(R.id.objHeightInput) }
+    private val itemDiameterInput: TextView by lazy { findViewById(R.id.objDiameterInput) }
+
+    // Jar dimension inputs
+    private val jarHeightInput: TextView by lazy { findViewById(R.id.jarHeightInput) }
+    private val jarLengthInput: TextView by lazy { findViewById(R.id.jarLengthInput) }
+    private val jarWidthInput: TextView by lazy { findViewById(R.id.jarWidthInput) }
+    private val jarDiameterInput: TextView by lazy { findViewById(R.id.jarDiameterInput) }
+
+    companion object {
         private const val TAG = "SpherePackActivity"
+
+        // Packing density constants for different shapes
+        private const val EGG_PACKING_DENSITY = 0.8
+        private const val SPHERE_PACKING_DENSITY = 0.73
+        private const val CYLINDER_PACKING_DENSITY = 0.72
+        private const val RECT_PRISM_PACKING_DENSITY = 0.64
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,141 +48,175 @@ class SpherePackActivity: AppCompatActivity() {
     }
 
     /**
-     * This function initializes the Sphere Pack Activity
+     * Initializes the Sphere Packing Activity by:
+     * 1. Retrieving shape configuration from the intent
+     * 2. Setting up the form based on selected shapes
+     * 3. Setting up the calculate button listener
      */
     private fun initSpherePackActivity() {
-
-        val spherePackBundle = getBundle()
-
+        val spherePackBundle = getShapeConfigurationBundle()
         initSpherePackForm(spherePackBundle)
-
-        calcBtnClickListener(spherePackBundle)
+        setupCalculateButtonListener(spherePackBundle)
     }
 
     /**
-     * This function handles the enabling and disabling of various number inputs
-     * based on the boolean values in the array
+     * Configures form input fields based on the selected shapes,
+     * disabling irrelevant input fields for the chosen configuration.
      */
-    private fun initSpherePackForm(spherePackBundle: MutableMap<String,Boolean>) {
-
-        if(spherePackBundle["eggShape"] == true){
-            itemWidthInput.isEnabled = false
-            itemLengthInput.isEnabled = false
-            itemHeightInput.isEnabled = false
-            itemDiameterInput.isEnabled = false
-        }
-        else if(spherePackBundle["sphereShape"] == true){
-            itemWidthInput.isEnabled = false
-            itemLengthInput.isEnabled = false
-            itemHeightInput.isEnabled = false
-        }
-        else if(spherePackBundle["rectPrismShape"] == true){
-            itemDiameterInput.isEnabled = false
-        }
-        else if(spherePackBundle["cylinderShape"] == true){
-            itemWidthInput.isEnabled = false
-            itemLengthInput.isEnabled = false
-        }
-        else if(spherePackBundle["cylinderJar"] == true){
-            jarWidthInput.isEnabled = false
-            jarLengthInput.isEnabled = false
-        }
-        else if(spherePackBundle["rectPrismJar"] == true){
-            jarDiameterInput.isEnabled = false
+    private fun initSpherePackForm(spherePackBundle: Map<String, Boolean>) {
+        when {
+            spherePackBundle["eggShape"] == true -> {
+                itemWidthInput.isEnabled = false
+                itemLengthInput.isEnabled = false
+                itemHeightInput.isEnabled = false
+                itemDiameterInput.isEnabled = false
+            }
+            spherePackBundle["sphereShape"] == true -> {
+                itemWidthInput.isEnabled = false
+                itemLengthInput.isEnabled = false
+                itemHeightInput.isEnabled = false
+            }
+            spherePackBundle["rectPrismShape"] == true -> {
+                itemDiameterInput.isEnabled = false
+            }
+            spherePackBundle["cylinderShape"] == true -> {
+                itemWidthInput.isEnabled = false
+                itemLengthInput.isEnabled = false
+            }
+            spherePackBundle["cylinderJar"] == true -> {
+                jarWidthInput.isEnabled = false
+                jarLengthInput.isEnabled = false
+            }
+            spherePackBundle["rectPrismJar"] == true -> {
+                jarDiameterInput.isEnabled = false
+            }
         }
     }
 
     /**
-     * This function returns the bundle that is passed via intent
+     * Retrieves shape configuration from the intent extras.
+     * @return A mutable map of shape configuration boolean values
      */
-    private fun getBundle(): MutableMap<String,Boolean> {
+    private fun getShapeConfigurationBundle(): MutableMap<String, Boolean> {
         val bundle = intent.extras
-        val spherePackForm = mutableMapOf(
+        return mutableMapOf(
             "cylinderJar" to (bundle?.getBoolean("cylinderJar", false) ?: false),
             "rectPrismJar" to (bundle?.getBoolean("rectPrismJar", false) ?: false),
             "eggShape" to (bundle?.getBoolean("eggShape", false) ?: false),
             "sphereShape" to (bundle?.getBoolean("sphereShape", false) ?: false),
             "rectPrismShape" to (bundle?.getBoolean("rectPrismShape", false) ?: false),
             "cylinderShape" to (bundle?.getBoolean("cylinderShape", false) ?: false)
-        )
-        Log.i(TAG, "Here is the bundle $spherePackForm")
-        return spherePackForm
+        ).also {
+            Log.i(TAG, "Shape configuration: $it")
+        }
     }
 
     /**
-     * This function handles the click listener for the calc button
+     * Sets up the calculate button click listener to estimate the number of items in the jar.
+     * Calculates based on jar and item volumes with a packing density factor.
      */
     @SuppressLint("SetTextI18n")
-    private fun calcBtnClickListener(spherePackBundle: MutableMap<String,Boolean>) {
-        calcBtn.setOnClickListener({
-            Log.i(TAG, "User clicked the calculate button!")
-            // Accessing the input values from the TextViews
-            val itemWidth = itemWidthInput.text.toString() // String
-            val itemLength = itemLengthInput.text.toString() // String
-            val itemHeight = itemHeightInput.text.toString() // String
-            val itemDiameter = itemDiameterInput.text.toString() // String
-            val jarHeight = jarHeightInput.text.toString() // Uncomment if needed
-            val jarLength = jarLengthInput.text.toString() // String
-            val jarWidth = jarWidthInput.text.toString() // String
-            val jarDiameter = jarDiameterInput.text.toString() // String
+    private fun setupCalculateButtonListener(spherePackBundle: Map<String, Boolean>) {
+        calcBtn.setOnClickListener {
+            Log.i(TAG, "Calculate button clicked!")
 
-            val itemWidthFloat = itemWidth.toFloatOrNull() // Convert to Float
-            val itemLengthFloat = itemLength.toFloatOrNull() // Convert to Float
-            val itemHeightFloat = itemHeight.toFloatOrNull() // Convert to Float
-            val itemDiameterFloat = itemDiameter.toFloatOrNull() // Convert to Float
-            val jarLengthFloat = jarLength.toFloatOrNull() // Convert to Float
-            val jarWidthFloat = jarWidth.toFloatOrNull() // Convert to Float
-            val jarDiameterFloat = jarDiameter.toFloatOrNull() // Convert to Float
-            val jarHeightFloat = jarHeight.toFloatOrNull() // Convert to Float
+            // Convert input values to floats, handling potential null cases
+            val inputs = extractAndConvertInputs()
 
-            // Consider using a 62% packing density
-            // (Volume of jar / volume of a single item) * 0.62
-            if(spherePackBundle["cylinderJar"] == true){
-                // Safely calculate radius (diameter / 2)
-                val radius = jarDiameterFloat?.div(2) ?: 0f
-
-                // Safely handle the height (use default 0f if null)
-                val height = jarHeightFloat ?: 0f
-
-                // Calculate volume of the jar
-                val volJar = Math.PI * (radius * radius) * height
-
-                // get Volume of individual item
-                val itemList = getItemVolume(spherePackBundle,itemWidthFloat,itemHeightFloat,itemLengthFloat,itemDiameterFloat)
-                Log.i(TAG, "Volume of the item $itemList")
-                solutionTextView.text = "${((volJar.times(itemList[1])).div(itemList[0]))}"
+            when {
+                spherePackBundle["cylinderJar"] == true -> calculateCylinderJarVolume(inputs)
+                spherePackBundle["rectPrismJar"] == true -> calculateRectPrismJarVolume(inputs)
             }
-            else if(spherePackBundle["rectPrismJar"] == true) {
-                // Solve using the rectangular prism equation
-                val volJar = jarWidthFloat?.times(jarHeightFloat!!)?.times(jarLengthFloat!!)
-
-                // Get volume of individual item
-                val itemList = getItemVolume(
-                    spherePackBundle,
-                    itemWidthFloat,
-                    itemHeightFloat,
-                    itemLengthFloat,
-                    itemDiameterFloat
-                )
-                Log.i(TAG, "Volume of the item $itemList")
-                solutionTextView.text = "${((volJar?.times(itemList[1]))?.div(itemList[0]))}"
-            }
-
-        })
+        }
     }
 
-    private fun getItemVolume(spherePackBundle: MutableMap<String, Boolean>,itemWidthFloat:Float?,itemHeightFloat: Float?, itemLengthFloat: Float?,itemDiameterFloat: Float? ): MutableList<Double> {
-        if(spherePackBundle["eggShape"] == true){
-            return mutableListOf(.72,0.8)
-        }else if(spherePackBundle["sphereShape"] == true){
-            return mutableListOf(4/3 * Math.PI * ((itemDiameterFloat?.div(2)!!) * (itemDiameterFloat.div(2))),0.73)
-        }else if(spherePackBundle["cylinderShape"] == true){
-            return mutableListOf(Math.PI * itemHeightFloat!! * (itemDiameterFloat?.div(2)!!), 0.72)
-        }
-        else if(spherePackBundle["rectPrismShape"] == true){
-            return mutableListOf((itemHeightFloat!! * itemLengthFloat!! * itemWidthFloat!!).toDouble(),0.64)
-        }
-        return mutableListOf(0.0)
+    /**
+     * Extracts and converts input values from TextViews to Float.
+     * @return A map of converted input values
+     */
+    private fun extractAndConvertInputs(): Map<String, Float?> = mapOf(
+        "itemWidth" to itemWidthInput.text.toString().toFloatOrNull(),
+        "itemLength" to itemLengthInput.text.toString().toFloatOrNull(),
+        "itemHeight" to itemHeightInput.text.toString().toFloatOrNull(),
+        "itemDiameter" to itemDiameterInput.text.toString().toFloatOrNull(),
+        "jarHeight" to jarHeightInput.text.toString().toFloatOrNull(),
+        "jarLength" to jarLengthInput.text.toString().toFloatOrNull(),
+        "jarWidth" to jarWidthInput.text.toString().toFloatOrNull(),
+        "jarDiameter" to jarDiameterInput.text.toString().toFloatOrNull()
+    )
+
+    /**
+     * Calculates the volume and number of items for a cylindrical jar.
+     */
+    private fun calculateCylinderJarVolume(inputs: Map<String, Float?>) {
+        val radius = inputs["jarDiameter"]?.div(2) ?: 0f
+        val height = inputs["jarHeight"] ?: 0f
+        val jarVolume = Math.PI * (radius * radius) * height
+
+        val (itemVolume, packingDensity) = getItemVolumeAndDensity(
+            inputs["itemWidth"],
+            inputs["itemHeight"],
+            inputs["itemLength"],
+            inputs["itemDiameter"]
+        )
+
+        val estimatedItemCount = ((jarVolume * packingDensity) / itemVolume).toInt()
+        solutionTextView.text = "$estimatedItemCount"
     }
 
+    /**
+     * Calculates the volume and number of items for a rectangular prism jar.
+     */
+    private fun calculateRectPrismJarVolume(inputs: Map<String, Float?>) {
+        val jarVolume = inputs["jarWidth"]
+            ?.times(inputs["jarHeight"] ?: 0f)
+            ?.times(inputs["jarLength"] ?: 0f)
+            ?: 0f
+
+        val (itemVolume, packingDensity) = getItemVolumeAndDensity(
+            inputs["itemWidth"],
+            inputs["itemHeight"],
+            inputs["itemLength"],
+            inputs["itemDiameter"]
+        )
+
+        val estimatedItemCount = ((jarVolume * packingDensity) / itemVolume).toInt()
+        solutionTextView.text = "$estimatedItemCount"
+    }
+
+    /**
+     * Calculates the volume and packing density for different item shapes.
+     * @return A pair of item volume and packing density
+     */
+    private fun getItemVolumeAndDensity(
+        itemWidth: Float?,
+        itemHeight: Float?,
+        itemLength: Float?,
+        itemDiameter: Float?
+    ): Pair<Double, Double> = when {
+        intent.extras?.getBoolean("eggShape", false) == true ->
+            Pair(0.72, EGG_PACKING_DENSITY)
+
+        intent.extras?.getBoolean("sphereShape", false) == true -> {
+            val radius = itemDiameter?.div(2) ?: 0f
+            Pair(
+                (4.0/3.0 * Math.PI * radius * radius).toDouble(),
+                SPHERE_PACKING_DENSITY
+            )
+        }
+
+        intent.extras?.getBoolean("cylinderShape", false) == true ->
+            Pair(
+                Math.PI * (itemHeight ?: 0f) * (itemDiameter?.div(2) ?: 0f).toDouble(),
+                CYLINDER_PACKING_DENSITY
+            )
+
+        intent.extras?.getBoolean("rectPrismShape", false) == true ->
+            Pair(
+                ((itemHeight ?: 0f) * (itemLength ?: 0f) * (itemWidth ?: 0f)).toDouble(),
+                RECT_PRISM_PACKING_DENSITY
+            )
+
+        else -> Pair(0.0, 0.0)
+    }
 }

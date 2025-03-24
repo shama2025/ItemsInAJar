@@ -8,15 +8,19 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 
 /**
- * Home UI for App where user picks method of estimating number of items in a jar
+ * MainActivity serves as the home screen for the Jar Item Estimator app.
+ * It provides two primary methods for estimating the number of items in a jar:
+ * 1. Sphere Packing Method
+ * 2. Volume of Objects Method
  */
 class MainActivity : AppCompatActivity() {
-    // UI Variables
-    private val sphereBtn: Button by lazy { findViewById(R.id.spherePackBtn) }
-    private val volObjBtn: Button by lazy { findViewById(R.id.objVolBtn)}
+    // UI buttons for different estimation methods
+    private val spherePackingButton: Button by lazy { findViewById(R.id.spherePackBtn) }
+    private val volumeObjectButton: Button by lazy { findViewById(R.id.objVolBtn) }
 
-    companion object{
-        private const val TAG = "Main Activity"
+    companion object {
+        // Logging tag for tracking events in this activity
+        private const val TAG = "MainActivity"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,45 +28,41 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.main_activity)
 
-        initMainActivty()
+        // Initialize button click listeners
+        setupButtonListeners()
     }
 
     /**
-     * This function will initialize the Main Activity
+     * Sets up click listeners for both estimation method buttons.
+     * Navigates to the corresponding activity when a button is clicked.
      */
-    private fun initMainActivty(){
+    private fun setupButtonListeners() {
+        // Set up listener for sphere packing method button
+        spherePackingButton.setOnClickListener {
+            navigateToJarInfoActivity()
+        }
 
-        // Function call for sphere button
-        spherePackClickListener()
-
-        // Function call for volume obj button
-        volObjClickListener()
+        // Set up listener for volume of objects method button
+        volumeObjectButton.setOnClickListener {
+            navigateToVolumeObjectActivity()
+        }
     }
 
     /**
-     * This function handles the click event listener for the sphere packing
-     * button
+     * Navigates to the Jar Info Activity for sphere packing method.
+     * Logs the user's navigation action.
      */
-    private fun spherePackClickListener(){
-        sphereBtn.setOnClickListener({
-            // If clicked navigate to the jar info activity
-            startActivity(Intent(this,JarInfoActivity::class.java))
-            Log.i(TAG, "User clicked the sphere button")
-        })
-
+    private fun navigateToJarInfoActivity() {
+        startActivity(Intent(this, JarInfoActivity::class.java))
+        Log.i(TAG, "User selected sphere packing method")
     }
 
     /**
-     * This function handles the click event listener for the volume of obj
-     * button
+     * Navigates to the Volume of Objects Activity.
+     * Logs the user's navigation action.
      */
-    private fun volObjClickListener(){
-        volObjBtn.setOnClickListener({
-            // If clicked navigate to the volume of items calculator
-            startActivity(Intent(this,VolObjActivity::class.java))
-            Log.i(TAG, "User clicked the vol obj button")
-        })
-
+    private fun navigateToVolumeObjectActivity() {
+        startActivity(Intent(this, VolObjActivity::class.java))
+        Log.i(TAG, "User selected volume of objects method")
     }
 }
-
