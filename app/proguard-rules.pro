@@ -1,21 +1,24 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+# Add any project-specific keep rules here
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Preserve Kotlin metadata
+-keepattributes *Annotation*, InnerClasses
+-dontnote kotlin.internal.**
+-dontnote kotlin.reflect.jvm.**
+-keep class kotlin.Metadata { *; }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Preserve Compose classes
+-keep class androidx.compose.** { *; }
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+# Preserve application class
+-keep class com.mashaffer.myiteminjarestimator.** { *; }
+
+# Keep all Android support libraries
+-keep class androidx.** { *; }
+
+# Prevent obfuscation of Android lifecycle components
+-keepnames class androidx.lifecycle.** { *; }
+
+# Keep native methods
+-keepclasseswithmembernames,includedescriptorclasses class * {
+    native <methods>;
+}
