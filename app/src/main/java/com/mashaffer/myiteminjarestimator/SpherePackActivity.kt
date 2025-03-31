@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
 /**
@@ -16,7 +17,6 @@ class SpherePackActivity : AppCompatActivity() {
 
     // UI component lazy initializations
     private val calcBtn: Button by lazy { findViewById(R.id.calcBtn) }
-    private val solutionTextView: TextView by lazy { findViewById(R.id.solutionTextView) }
 
     // Item dimension inputs
     private val itemWidthInput: TextView by lazy { findViewById(R.id.objWidthInput) }
@@ -161,7 +161,7 @@ class SpherePackActivity : AppCompatActivity() {
         )
 
         val estimatedItemCount = ((jarVolume * packingDensity) / itemVolume).toInt()
-        solutionTextView.text = "$estimatedItemCount"
+        displayItemCount(estimatedItemCount)
     }
 
     /**
@@ -181,7 +181,7 @@ class SpherePackActivity : AppCompatActivity() {
         )
 
         val estimatedItemCount = ((jarVolume * packingDensity) / itemVolume).toInt()
-        solutionTextView.text = "$estimatedItemCount"
+        displayItemCount(estimatedItemCount)
     }
 
     /**
@@ -218,5 +218,30 @@ class SpherePackActivity : AppCompatActivity() {
             )
 
         else -> Pair(0.0, 0.0)
+    }
+    /**
+     * Displays a dialog showing the estimated item count to the user.
+     *
+     * @param estimatedItemCount The number of items to display in the dialog
+     */
+    private fun displayItemCount(estimatedItemCount: Int) {
+        // Create dialog builder with current context
+        val alertDialog = AlertDialog.Builder(this)
+
+        // Inflate custom layout for the dialog
+        val dialogView = layoutInflater.inflate(R.layout.item_count, null)
+
+        // Find and set the text for the item count TextView
+        dialogView.findViewById<TextView>(R.id.itemCount).apply {
+            text = "Number of items: $estimatedItemCount"
+        }
+
+        // Configure the dialog with the custom view and a close button
+        alertDialog.apply {
+            setView(dialogView)
+            setNegativeButton("Close") { dialog, _ -> dialog.dismiss() }
+            // Create and show the dialog in one step
+            show()
+        }
     }
 }

@@ -14,7 +14,7 @@
         android:id="@+id/objWidthLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="128dp"
         android:text="Width of Item: "
         android:textColor="#171717"
         android:textSize="22sp"
@@ -226,16 +226,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/jarDiameterInput" />
 
-    <TextView
-        android:id="@+id/solutionTextView"
-        android:layout_width="340dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="16dp"
-        android:textColor="#0D0C0C"
-        android:textSize="26sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.084"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calcBtn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
